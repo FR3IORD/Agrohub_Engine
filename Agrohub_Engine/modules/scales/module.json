@@ -1,0 +1,9 @@
+{
+  "name": "Scales",
+  "technical_name": "scales",
+  "description": "Scales module: manage scale devices and readings per branch.",
+  "icon": "fas fa-weight-hanging",
+  "category": "Supply Chain",
+  "color": "from-green-400 to-green-600",
+  "version": "1.0.0"
+}

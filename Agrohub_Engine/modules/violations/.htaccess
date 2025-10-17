@@ -1,0 +1,37 @@
+# Violations Module - Apache Configuration
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /modules/violations/
+    
+    # Prevent access to sensitive files
+    <FilesMatch "^(config\.php|\.htaccess|\.env)$">
+        Require all denied
+    </FilesMatch>
+    
+    # Prevent directory listing
+    Options -Indexes
+    
+    # Pretty URLs
+    # /violations/123 -> report.php?id=123
+    RewriteRule ^(\d+)$ report.php?id=$1 [L,QSA]
+    
+    # Secure uploads
+    RewriteCond %{REQUEST_URI} ^/modules/violations/uploads/
+    RewriteCond %{HTTP:Authorization} ^$
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# PHP Settings
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 30
+</IfModule>

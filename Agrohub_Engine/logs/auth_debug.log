@@ -1,0 +1,72 @@
+[17-Oct-2025 09:07:53 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 09:07:53 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 09:07:53 UTC] Attempting login for user: it
+[17-Oct-2025 09:07:53 UTC] Connecting to PHPLogin database
+[17-Oct-2025 09:07:55 UTC] Querying for username: it
+[17-Oct-2025 09:07:55 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 09:07:55 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 09:07:55 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 09:07:55 UTC] Login successful for phplogin user: it
+[17-Oct-2025 09:19:32 UTC] Raw input: {"identifier":"gm gelovani","password":"7777"}
+[17-Oct-2025 09:19:32 UTC] Login attempt with: {"identifier":"gm gelovani","password":"7777"}
+[17-Oct-2025 09:19:32 UTC] Attempting login for user: gm gelovani
+[17-Oct-2025 09:19:32 UTC] Connecting to PHPLogin database
+[17-Oct-2025 09:19:34 UTC] Querying for username: gm gelovani
+[17-Oct-2025 09:19:34 UTC] Password verified for phplogin user: GM gelovani
+[17-Oct-2025 09:19:34 UTC] Successfully authenticated with phplogin: {"id":17,"username":"GM gelovani","email":"GM gelovani@local","role":"GM gelovani","status":"1"}
+[17-Oct-2025 09:19:34 UTC] Found existing local user with phplogin_id: 17
+[17-Oct-2025 09:19:34 UTC] Login successful for phplogin user: gm gelovani
+[17-Oct-2025 10:09:29 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:09:29 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:09:29 UTC] Attempting login for user: it
+[17-Oct-2025 10:09:29 UTC] Connecting to PHPLogin database
+[17-Oct-2025 10:09:31 UTC] Querying for username: it
+[17-Oct-2025 10:09:31 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 10:09:31 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 10:09:31 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 10:09:31 UTC] Login successful for phplogin user: it
+[17-Oct-2025 10:16:49 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:16:49 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:16:49 UTC] Attempting login for user: it
+[17-Oct-2025 10:16:49 UTC] Connecting to PHPLogin database
+[17-Oct-2025 10:16:51 UTC] Querying for username: it
+[17-Oct-2025 10:16:51 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 10:16:51 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 10:16:51 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 10:16:51 UTC] Login successful for phplogin user: it
+[17-Oct-2025 10:23:35 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:23:35 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:23:35 UTC] Attempting login for user: it
+[17-Oct-2025 10:23:35 UTC] Connecting to PHPLogin database
+[17-Oct-2025 10:23:37 UTC] Querying for username: it
+[17-Oct-2025 10:23:37 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 10:23:37 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 10:23:37 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 10:23:37 UTC] Login successful for phplogin user: it
+[17-Oct-2025 10:26:13 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:26:13 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:26:13 UTC] Attempting login for user: it
+[17-Oct-2025 10:26:13 UTC] Connecting to PHPLogin database
+[17-Oct-2025 10:26:15 UTC] Querying for username: it
+[17-Oct-2025 10:26:15 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 10:26:15 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 10:26:15 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 10:26:15 UTC] Login successful for phplogin user: it
+[17-Oct-2025 10:29:51 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:29:51 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 10:29:51 UTC] Attempting login for user: it
+[17-Oct-2025 10:29:51 UTC] Connecting to PHPLogin database
+[17-Oct-2025 10:29:53 UTC] Querying for username: it
+[17-Oct-2025 10:29:53 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 10:29:53 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 10:29:53 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 10:29:53 UTC] Login successful for phplogin user: it
+[17-Oct-2025 11:10:43 UTC] Raw input: {"identifier":"it","password":"777888"}
+[17-Oct-2025 11:10:43 UTC] Login attempt with: {"identifier":"it","password":"777888"}
+[17-Oct-2025 11:10:43 UTC] Attempting login for user: it
+[17-Oct-2025 11:10:43 UTC] Connecting to PHPLogin database
+[17-Oct-2025 11:10:45 UTC] Querying for username: it
+[17-Oct-2025 11:10:45 UTC] Password verified for phplogin user: IT
+[17-Oct-2025 11:10:45 UTC] Successfully authenticated with phplogin: {"id":108,"username":"IT","email":"g.iordanovi@agrohub.ge","role":"IT","status":"1"}
+[17-Oct-2025 11:10:45 UTC] Found existing local user with phplogin_id: 108
+[17-Oct-2025 11:10:45 UTC] Login successful for phplogin user: it

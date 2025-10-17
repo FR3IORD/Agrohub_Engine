@@ -1,0 +1,51 @@
+{
+  "id": "violations",
+  "name": "Violations Management",
+  "technical_name": "violations",
+  "version": "1.0.0",
+  "description": "Comprehensive violation reporting and management system",
+  "icon": "fas fa-exclamation-triangle",
+  "color": "from-red-400 to-red-600",
+  "badge_color": "#ef4444",
+  "category": "Human Resources",
+  "author": "Agrohub Team",
+  "is_core": false,
+  "is_active": true,
+  "price": 0,
+  "features": [
+    "Violation Tracking",
+    "Photo Attachments",
+    "Sanctions Management",
+    "Role-based Permissions",
+    "Branch Access Control",
+    "Real-time Statistics",
+    "Activity Logging",
+    "Export Reports"
+  ],
+  "permissions": [
+    "violations.view.all",
+    "violations.view.own",
+    "violations.create",
+    "violations.edit",
+    "violations.delete",
+    "violations.sanctions"
+  ],
+  "routes": {
+    "main": "modules/violations/index.php",
+    "admin": "modules/violations/admin.php",
+    "report": "modules/violations/report.php",
+    "create": "modules/violations/create.php",
+    "api": "modules/violations/api/violations.php"
+  },
+  "database": {
+    "tables": [
+      "violations",
+      "violation_types",
+      "violation_statuses",
+      "violation_photos",
+      "violation_sanctions",
+      "violation_user_permissions",
+      "violation_activity_logs"
+    ]
+  }
+}

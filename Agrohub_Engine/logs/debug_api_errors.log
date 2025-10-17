@@ -1,0 +1,18 @@
+[10-Oct-2025 11:59:45 UTC] Test login attempt with identifier: it
+[10-Oct-2025 11:59:45 UTC] PHPLogin user found: Array
+(
+    [id] => 108
+    [username] => IT
+    [password] => $2y$10$UgR...
+    [role] => IT
+    [profile_picture] => uploads/68e63c7aaa39a.jpg
+    [created_at] => 2024-12-25 12:33:17
+    [last_activity] => 2025-10-09 20:14:01
+    [is_online] => 0
+    [bio] => IT შნიკ :)
+    [status] => 1
+    [email] => g.iordanovi@agrohub.ge
+    [session_id] => pg9ts76iblo46cotgugp65ojnv
+)
+
+[10-Oct-2025 11:59:45 UTC] PHPLogin authentication successful for user: IT

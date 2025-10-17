@@ -1,0 +1,189 @@
+[10-Oct-2025 11:58:31 UTC] Login attempt: Array
+(
+    [identifier] => it
+    [password] => 777888
+)
+
+[10-Oct-2025 11:58:31 UTC] Trying local authentication with identifier: it
+[10-Oct-2025 11:58:31 UTC] Local authentication failed for identifier: it
+[10-Oct-2025 11:58:31 UTC] Trying PHPLogin authentication with identifier: it
+[10-Oct-2025 11:58:31 UTC] PHPLogin authentication successful for user: IT
+[10-Oct-2025 11:58:31 UTC] External user found: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 11:58:31 UTC] Creating local user from external user: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 11:58:32 UTC] Create local user error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[10-Oct-2025 12:00:34 UTC] Login attempt: Array
+(
+    [identifier] => it
+    [password] => 777888
+)
+
+[10-Oct-2025 12:00:34 UTC] Trying local authentication with identifier: it
+[10-Oct-2025 12:00:34 UTC] Local authentication failed for identifier: it
+[10-Oct-2025 12:00:34 UTC] Trying PHPLogin authentication with identifier: it
+[10-Oct-2025 12:00:34 UTC] PHPLogin authentication successful for user: IT
+[10-Oct-2025 12:00:34 UTC] External user found: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:00:34 UTC] Creating local user from external user: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:00:34 UTC] Create local user error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[10-Oct-2025 12:00:51 UTC] Login attempt: Array
+(
+    [identifier] => it
+    [password] => 777888
+)
+
+[10-Oct-2025 12:00:51 UTC] Trying local authentication with identifier: it
+[10-Oct-2025 12:00:51 UTC] Local authentication failed for identifier: it
+[10-Oct-2025 12:00:51 UTC] Trying PHPLogin authentication with identifier: it
+[10-Oct-2025 12:00:51 UTC] PHPLogin authentication successful for user: IT
+[10-Oct-2025 12:00:51 UTC] External user found: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:00:51 UTC] Creating local user from external user: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:00:51 UTC] Create local user error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[10-Oct-2025 12:05:31 UTC] Login attempt: Array
+(
+    [identifier] => admin@agrohub.local
+    [password] => admin123
+)
+
+[10-Oct-2025 12:05:31 UTC] Trying local authentication with identifier: admin@agrohub.local
+[10-Oct-2025 12:05:31 UTC] Local authentication successful for user ID: 1
+[10-Oct-2025 12:05:31 UTC] Login successful for user: admin
+[10-Oct-2025 12:05:40 UTC] Login attempt: Array
+(
+    [identifier] => it
+    [password] => 777888
+)
+
+[10-Oct-2025 12:05:40 UTC] Trying local authentication with identifier: it
+[10-Oct-2025 12:05:40 UTC] Local authentication failed for identifier: it
+[10-Oct-2025 12:05:40 UTC] Trying PHPLogin authentication with identifier: it
+[10-Oct-2025 12:05:40 UTC] PHPLogin authentication successful for user: IT
+[10-Oct-2025 12:05:40 UTC] External user found: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:05:40 UTC] Creating local user from external user: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:05:40 UTC] Create local user error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[10-Oct-2025 12:06:47 UTC] Login attempt: Array
+(
+    [identifier] => admin@agrohub.local
+    [password] => admin123
+)
+
+[10-Oct-2025 12:06:47 UTC] Trying local authentication with identifier: admin@agrohub.local
+[10-Oct-2025 12:06:47 UTC] Local authentication successful for user ID: 1
+[10-Oct-2025 12:06:47 UTC] Login successful for user: admin
+[10-Oct-2025 12:06:53 UTC] Login attempt: Array
+(
+    [identifier] => iordanovi1011@gmail.com
+    [password] => 123456
+)
+
+[10-Oct-2025 12:06:53 UTC] Trying local authentication with identifier: iordanovi1011@gmail.com
+[10-Oct-2025 12:06:53 UTC] Local authentication successful for user ID: 2
+[10-Oct-2025 12:06:53 UTC] Login successful for user: iordanovi1011
+[10-Oct-2025 12:07:01 UTC] Login attempt: Array
+(
+    [identifier] => it
+    [password] => 777888
+)
+
+[10-Oct-2025 12:07:01 UTC] Trying local authentication with identifier: it
+[10-Oct-2025 12:07:01 UTC] Local authentication failed for identifier: it
+[10-Oct-2025 12:07:01 UTC] Trying PHPLogin authentication with identifier: it
+[10-Oct-2025 12:07:01 UTC] PHPLogin authentication successful for user: IT
+[10-Oct-2025 12:07:01 UTC] External user found: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:07:01 UTC] Creating local user from external user: Array
+(
+    [id] => 108
+    [username] => IT
+    [email] => g.iordanovi@agrohub.ge
+    [role] => IT
+)
+
+[10-Oct-2025 12:07:01 UTC] Create local user error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1
+[10-Oct-2025 12:07:06 UTC] Login attempt: Array
+(
+    [identifier] => lelab
+    [password] => 888777
+)
+
+[10-Oct-2025 12:07:06 UTC] Trying local authentication with identifier: lelab
+[10-Oct-2025 12:07:06 UTC] Local authentication failed for identifier: lelab
+[10-Oct-2025 12:07:06 UTC] Trying PHPLogin authentication with identifier: lelab
+[10-Oct-2025 12:07:06 UTC] PHPLogin authentication successful for user: lelab
+[10-Oct-2025 12:07:06 UTC] External user found: Array
+(
+    [id] => 165
+    [username] => lelab
+    [email] => l.barbakadze@agrohub.ge
+    [role] => სრული ხედვა
+)
+
+[10-Oct-2025 12:07:06 UTC] Creating local user from external user: Array
+(
+    [id] => 165
+    [username] => lelab
+    [email] => l.barbakadze@agrohub.ge
+    [role] => სრული ხედვა
+)
+
+[10-Oct-2025 12:07:06 UTC] Create local user error: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'role' at row 1

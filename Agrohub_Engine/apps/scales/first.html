@@ -1,0 +1,125 @@
+<div>
+    <div class="flex justify-between items-center mb-4">
+        <div>
+            <h2 class="text-lg font-semibold">Scales — Branch Configuration</h2>
+            <p class="text-sm text-gray-600">Add scales per branch with API address, port, model and section.</p>
+        </div>
+        <div>
+            <button id="addSample" class="bg-green-500 text-white px-3 py-1 rounded text-sm">Add sample</button>
+        </div>
+    </div>
+
+    <form id="scaleForm" class="space-y-3 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input id="branch" placeholder="Branch name" class="border rounded px-3 py-2" required />
+            <input id="apiAddress" placeholder="API address (e.g. 192.168.1.100)" class="border rounded px-3 py-2" required />
+            <input id="port" type="number" placeholder="Port (e.g. 80)" class="border rounded px-3 py-2" required />
+            <input id="model" placeholder="Model (e.g. XT-200)" class="border rounded px-3 py-2" />
+            <input id="section" placeholder="Section name (e.g. Receiving)" class="border rounded px-3 py-2" />
+        </div>
+        <div class="flex space-x-2">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Save scale</button>
+            <button type="button" id="clearAll" class="bg-gray-200 px-4 py-2 rounded">Clear all</button>
+        </div>
+    </form>
+
+    <div>
+        <h3 class="text-md font-medium mb-2">Configured scales</h3>
+        <div id="list" class="space-y-2"></div>
+    </div>
+
+    <template id="itemTpl">
+        <div class="p-3 border rounded flex justify-between items-center">
+            <div>
+                <div class="font-semibold branchName"></div>
+                <div class="text-sm text-gray-600"><span class="apiAddr"></span>:<span class="apiPort"></span> — <span class="modelName"></span> <span class="sectionName text-sm text-gray-500"></span></div>
+            </div>
+            <div class="space-x-2">
+                <button class="btn-sim bg-yellow-400 text-white px-3 py-1 rounded text-sm">Simulate</button>
+                <button class="btn-del bg-red-500 text-white px-3 py-1 rounded text-sm">Delete</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        (function(){
+            const key = 'scales_config_v1';
+            const form = document.getElementById('scaleForm');
+            const list = document.getElementById('list');
+            const tpl = document.getElementById('itemTpl');
+            const addSample = document.getElementById('addSample');
+            const clearAll = document.getElementById('clearAll');
+
+            function load(){
+                try {
+                    const raw = localStorage.getItem(key) || '[]';
+                    return JSON.parse(raw);
+                } catch(e){
+                    return [];
+                }
+            }
+
+            function save(items){
+                localStorage.setItem(key, JSON.stringify(items));
+                render();
+            }
+
+            function render(){
+                const items = load();
+                list.innerHTML = '';
+                items.forEach((it, idx) => {
+                    const node = tpl.content.cloneNode(true);
+                    node.querySelector('.branchName').textContent = it.branch;
+                    node.querySelector('.apiAddr').textContent = it.apiAddress;
+                    node.querySelector('.apiPort').textContent = it.port;
+                    node.querySelector('.modelName').textContent = it.model || '';
+                    node.querySelector('.sectionName').textContent = it.section ? ('(' + it.section + ')') : '';
+
+                    node.querySelector('.btn-del').addEventListener('click', function(){
+                        const all = load();
+                        all.splice(idx,1);
+                        save(all);
+                    });
+
+                    node.querySelector('.btn-sim').addEventListener('click', function(){
+                        // Simulate a reading and show an alert
+                        const weight = (Math.random()*200).toFixed(2);
+                        alert('Simulated reading for ' + it.branch + ': ' + weight + ' kg');
+                    });
+
+                    list.appendChild(node);
+                });
+            }
+
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                const items = load();
+                const newItem = {
+                    branch: document.getElementById('branch').value.trim(),
+                    apiAddress: document.getElementById('apiAddress').value.trim(),
+                    port: document.getElementById('port').value.trim(),
+                    model: document.getElementById('model').value.trim(),
+                    section: document.getElementById('section').value.trim()
+                };
+                if (!newItem.branch || !newItem.apiAddress) return alert('Branch and API address required');
+                items.push(newItem);
+                save(items);
+                form.reset();
+            });
+
+            addSample.addEventListener('click', function(){
+                const items = load();
+                items.push({branch:'Main Warehouse', apiAddress:'192.168.1.101', port:'8080', model:'XT-200', section:'Receiving'});
+                save(items);
+            });
+
+            clearAll.addEventListener('click', function(){
+                if (!confirm('Clear all configured scales?')) return;
+                localStorage.removeItem(key);
+                render();
+            });
+
+            render();
+        })();
+    </script>
+</div>

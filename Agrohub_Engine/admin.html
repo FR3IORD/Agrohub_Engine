@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Agrohub ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .tab-active { border-bottom: 2px solid #667eea; color: #667eea; }
+        .modal { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+        .animate-slide-in { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* Toggle Switch */
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e0; transition: 0.3s; border-radius: 26px;
+        }
+        .toggle-slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+            background-color: white; transition: 0.3s; border-radius: 50%;
+        }
+        input:checked + .toggle-slider { background-color: #48bb78; }
+        input:checked + .toggle-slider:before { transform: translateX(24px); }
+        
+        /* Permission Checkbox */
+        .perm-check { 
+            accent-color: #667eea; 
+            width: 18px; 
+            height: 18px; 
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+        
+        /* Violations Permissions Styles */
+        .permission-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        
+        .permission-checkbox:hover {
+            background: #f9fafb;
+        }
+        
+        .permission-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .permission-checkbox span {
+            font-size: 0.9rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-secondary { background: #e5e7eb; color: #4b5563; }
+        
+        .btn-icon {
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            color: #6b7280;
+        }
+        
+        .btn-icon:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="gradient-bg w-10 h-10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Admin Panel</h1>
+                        <p class="text-sm text-gray-500">Agrohub ERP Management</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div id="admin-user-info" class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <p id="admin-user-name" class="text-sm font-medium text-gray-900">Admin</p>
+                            <p class="text-xs text-gray-500">Administrator</p>
+                        </div>
+                        <div id="admin-avatar" class="gradient-bg w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold">A</div>
+                    </div>
+                    <button onclick="adminLogout()" class="text-gray-500 hover:text-red-600 transition" title="Logout">
+                        <i class="fas fa-sign-out-alt text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white border-b sticky top-16 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8 overflow-x-auto">
+                <button onclick="switchTab('users')" class="tab-btn tab-active py-4 px-1 text-sm font-medium transition whitespace-nowrap">
+                    <i class="fas fa-users mr-2"></i>Users
+                </button>
+                <button onclick="switchTab('apps')" class="tab-btn py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition whitespace-nowrap">
+                    <i class="fas fa-th-large mr-2"></i>Applications
+                </button>
+                <button onclick="switchTab('permissions')" class="tab-btn py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition whitespace-nowrap">
+                    <i class="fas fa-key mr-2"></i>App Access
+                </button>
+                <button onclick="switchTab('violations-permissions')" class="tab-btn py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition whitespace-nowrap">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Violations Permissions
+                </button>
+                <button onclick="switchTab('logs')" class="tab-btn py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-900 transition whitespace-nowrap">
+                    <i class="fas fa-list-alt mr-2"></i>Activity Logs
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- USERS TAB -->
+        <div id="tab-users" class="tab-content">
+            <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">User Management</h2>
+                    <p class="text-gray-600">Manage system users and their permissions</p>
+                </div>
+                <button onclick="openUserModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:opacity-90 transition flex items-center space-x-2 shadow-lg">
+                    <i class="fas fa-plus"></i>
+                    <span>Add User</span>
+                </button>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <input type="text" id="search-users" placeholder="Search users..." 
+                               onkeyup="searchUsers()"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <select id="filter-role" onchange="filterUsers()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            <option value="">All Roles</option>
+                            <option value="admin">Admin</option>
+                            <option value="manager">Manager</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="filter-status" onchange="filterUsers()" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                            <option value="">All Status</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body" class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                                    <i class="fas fa-spinner fa-spin text-3xl mb-2"></i>
+                                    <p>Loading users...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- APPS TAB -->
+        <div id="tab-apps" class="tab-content hidden">
+            <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Applications</h2>
+                    <p class="text-gray-600">Manage system applications and modules</p>
+                </div>
+                <button onclick="openAppModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:opacity-90 transition flex items-center space-x-2 shadow-lg">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Application</span>
+                </button>
+            </div>
+
+            <!-- Apps Grid -->
+            <div id="apps-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-spinner fa-spin text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-gray-500">Loading applications...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PERMISSIONS TAB -->
+        <div id="tab-permissions" class="tab-content hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">User App Access Management</h2>
+                <p class="text-gray-600">Control which apps each user can access</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
+                <input type="text" id="search-permissions" placeholder="Search users..." 
+                       onkeyup="searchPermissions()"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            </div>
+
+            <div id="permissions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-spinner fa-spin text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-gray-500">Loading users...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIOLATIONS PERMISSIONS TAB (NEW) -->
+        <div id="tab-violations-permissions" class="tab-content hidden">
+            <div class="mb-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900">Violations Permissions Management</h2>
+                        <p class="text-gray-600 mt-1">Configure detailed user permissions for the Violations Management module</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="violations-permissions-container">
+                <div class="text-center py-16">
+                    <i class="fas fa-spinner fa-spin text-5xl text-purple-500 mb-4"></i>
+                    <p class="text-gray-500 text-lg">Loading permissions...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGS TAB -->
+        <div id="tab-logs" class="tab-content hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Activity Logs</h2>
+                <p class="text-gray-600">System activity and audit trail</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body" class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                                    <i class="fas fa-spinner fa-spin text-3xl mb-2"></i>
+                                    <p>Loading logs...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- USER MODAL -->
+    <div id="user-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl animate-slide-in">
+            <div class="gradient-bg px-6 py-4 rounded-t-2xl flex items-center justify-between">
+                <h3 id="user-modal-title" class="text-xl font-bold text-white">Add New User</h3>
+                <button onclick="closeUserModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="user-form" class="p-6" onsubmit="event.preventDefault(); saveUser();">
+                <input type="hidden" id="user-id">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Full Name <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="user-name" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Email <span class="text-red-500">*</span>
+                        </label>
+                        <input type="email" id="user-email" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Password <span class="text-red-500" id="password-required">*</span>
+                        </label>
+                        <input type="password" id="user-password"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <p class="text-xs text-gray-500 mt-1">Leave empty to keep current password</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                        <input type="text" id="user-company"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Role <span class="text-red-500">*</span>
+                        </label>
+                        <select id="user-role" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="user">User</option>
+                            <option value="manager">Manager</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Status <span class="text-red-500">*</span>
+                        </label>
+                        <select id="user-status" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6 pt-6 border-t">
+                    <button type="button" onclick="closeUserModal()"
+                            class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="px-6 py-2 gradient-bg text-white rounded-lg hover:opacity-90 transition">
+                        <i class="fas fa-save mr-2"></i>Save User
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- APP MODAL -->
+    <div id="app-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl animate-slide-in">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 rounded-t-2xl flex items-center justify-between">
+                <h3 id="app-modal-title" class="text-xl font-bold text-white">Add New Application</h3>
+                <button onclick="closeAppModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="app-form" class="p-6" onsubmit="event.preventDefault(); saveApp();">
+                <input type="hidden" id="app-id">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Application Name <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="app-name" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">URL</label>
+                        <input type="text" id="app-url"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="app.php">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Icon Class</label>
+                        <input type="text" id="app-icon" value="fas fa-cube"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="fas fa-cube">
+                        <p class="text-xs text-gray-500 mt-1">Font Awesome icon class</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Color</label>
+                        <select id="app-color"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="from-blue-400 to-blue-600">Blue</option>
+                            <option value="from-purple-400 to-purple-600">Purple</option>
+                            <option value="from-green-400 to-green-600">Green</option>
+                            <option value="from-red-400 to-red-600">Red</option>
+                            <option value="from-yellow-400 to-yellow-600">Yellow</option>
+                            <option value="from-pink-400 to-pink-600">Pink</option>
+                            <option value="from-indigo-400 to-indigo-600">Indigo</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Version</label>
+                        <input type="text" id="app-version" value="1.0"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                        <select id="app-status"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="app-description" rows="3"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6 pt-6 border-t">
+                    <button type="button" onclick="closeAppModal()"
+                            class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:opacity-90 transition">
+                        <i class="fas fa-save mr-2"></i>Save Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- APP ACCESS MODAL (WITH VIOLATIONS GRANULAR PERMISSIONS) -->
+    <div id="app-access-modal" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col animate-slide-in">
+            <div class="bg-gradient-to-r from-green-600 to-teal-600 px-6 py-4 rounded-t-2xl flex items-center justify-between flex-shrink-0">
+                <div>
+                    <h3 class="text-xl font-bold text-white flex items-center">
+                        <i class="fas fa-key mr-3"></i>
+                        Manage App Access & Permissions
+                    </h3>
+                    <p id="app-access-user-name" class="text-sm text-green-100 mt-1"></p>
+                </div>
+                <button onclick="closeAppAccessModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1">
+                <input type="hidden" id="app-access-user-id">
+                
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-blue-500 mt-1 mr-3 text-lg"></i>
+                        <div class="text-sm text-blue-700">
+                            <p class="font-semibold mb-1">Grant or revoke app access and configure permissions</p>
+                            <p>• Enable app access using toggle switches</p>
+                            <p>• Configure detailed permissions for Violations app (view, create, edit, delete, etc.)</p>
+                            <p>• Changes are saved automatically</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between mb-4 pb-4 border-b">
+                    <span class="text-sm font-semibold text-gray-700">Quick Actions:</span>
+                    <div class="space-x-2">
+                        <button onclick="selectAllApps()" class="text-sm px-4 py-1.5 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition font-medium">
+                            <i class="fas fa-check-double mr-1"></i>Select All
+                        </button>
+                        <button onclick="deselectAllApps()" class="text-sm px-4 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition font-medium">
+                            <i class="fas fa-times mr-1"></i>Deselect All
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="app-access-list" class="space-y-4">
+                    <div class="text-center py-12">
+                        <i class="fas fa-spinner fa-spin text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-gray-500">Loading applications...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 border-t flex-shrink-0 flex items-center justify-between rounded-b-2xl">
+                <div class="text-sm text-gray-600 flex items-center">
+                    <i class="fas fa-save text-yellow-500 mr-2 text-lg"></i>
+                    <span class="font-medium">All changes are saved automatically</span>
+                </div>
+                <button onclick="closeAppAccessModal()"
+                        class="px-6 py-2.5 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-lg hover:opacity-90 transition shadow-lg font-medium">
+                    <i class="fas fa-check mr-2"></i>Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-3"></div>
+
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>
